@@ -62,9 +62,6 @@ public final class Main {
 
     // Setup Spark Routes
 
-    // TODO: create a call to Spark.post to make a POST request to a URL which
-    // will handle getting matchmaking results for the input
-    // It should only take in the route and a new ResultsHandler
     Spark.post("/matches", new ResultsHandler());
     Spark.options("/*", (request, response) -> {
       String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -111,9 +108,6 @@ public final class Main {
   private static class ResultsHandler implements Route {
     @Override
     public String handle(Request req, Response res) {
-      // TODO: Get JSONObject from req and use it to get the value of the sun, moon,
-      // and rising
-      // for generating matches
       JSONObject reqJSON;
       String jsonSun;
       String jsonMoon;
@@ -127,11 +121,6 @@ public final class Main {
         e.printStackTrace();
         return null;
       }
-      // TODO: use the MatchMaker.makeMatches method to get matches
-
-      // TODO: create an immutable map using the matches
-
-      // TODO: return a json of the suggestions (HINT: use GSON.toJson())
       List<String> matches = MatchMaker.makeMatches(jsonSun, jsonMoon, jsonRising);
       ImmutableMap<String, List<String>> immutableMap = ImmutableMap.of("matches", matches);
       Gson GSON = new Gson();
